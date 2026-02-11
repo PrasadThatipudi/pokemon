@@ -42,7 +42,7 @@ class Pokemon extends React.Component {
 class Pokemons extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { noOfPokemons: 5 };
+    this.state = { noOfPokemons: props.paginationLimit };
   }
 
   render() {
