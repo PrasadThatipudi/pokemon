@@ -3,7 +3,7 @@ body {
 }
 
 .pokemons {
-  display: flex;
-  width: 600px;
-  flex-wrap: wrap;
+  display: grid;
+  width: 500px;
+  grid-template-columns: repeat(5, 150px);
 }

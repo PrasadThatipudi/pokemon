@@ -39,15 +39,42 @@ class Pokemon extends React.Component {
   }
 }
 
-const pokemonIds = Array.from({ length: 10 }, (_, index) => ({
-  pokemonId: index + 1,
-}));
+class Pokemons extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { noOfPokemons: 5 };
+  }
 
-const pokemons = pokemonIds.map((pokemon) =>
-  React.createElement(Pokemon, { ...pokemon, key: pokemon.pokemonId }),
-);
+  render() {
+    const pokemonIds = Array.from(
+      { length: this.state.noOfPokemons },
+      (_, index) => index + 1,
+    );
+
+    const pokemons = pokemonIds.map((pokemonId) =>
+      React.createElement(Pokemon, { key: pokemonId, pokemonId }),
+    );
+
+    const loadMoreButton = React.createElement(
+      "button",
+      {
+        onClick: () =>
+          this.setState(({ noOfPokemons }) => ({
+            noOfPokemons: noOfPokemons + this.props.paginationLimit,
+          })),
+      },
+      "Load more",
+    );
+    return React.createElement(
+      "div",
+      null,
+      React.createElement("div", { className: "pokemons" }, pokemons),
+      loadMoreButton,
+    );
+  }
+}
 
 ReactDOM.render(
-  React.createElement("div", { className: "pokemons" }, pokemons),
+  React.createElement(Pokemons, { paginationLimit: 5 }),
   main_container,
 );
