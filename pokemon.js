@@ -43,8 +43,8 @@ const pokemonIds = Array.from({ length: 10 }, (_, index) => ({
   pokemonId: index + 1,
 }));
 
-const pokemons = pokemonIds.map((pokemon, index) =>
-  React.createElement(Pokemon, { ...pokemon, key: index }),
+const pokemons = pokemonIds.map((pokemon) =>
+  React.createElement(Pokemon, { ...pokemon, key: pokemon.pokemonId }),
 );
 
 ReactDOM.render(
