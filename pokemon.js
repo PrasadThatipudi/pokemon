@@ -14,24 +14,38 @@ const PokemonDetails = (props) => {
 class Pokemon extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { loading: true };
+    this.state = { loading: true, name: null, imageUrl: null };
+  }
+
+  componentDidMount() {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${this.props.pokemonId}`)
+      .then((response) => response.json())
+      .then(({ name, sprites }) =>
+        this.setState({
+          name,
+          imageUrl: sprites.front_default,
+          loading: false,
+        }),
+      );
   }
 
   render() {
     return this.state.loading
       ? React.createElement(Loading)
       : React.createElement(PokemonDetails, {
-          imageUrl:
-            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-          name: "Bulbasaur",
+          imageUrl: this.state.imageUrl,
+          name: this.state.name,
         });
   }
 }
 
-const bulbasaur = React.createElement(PokemonDetails, {
-  imageUrl:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-  name: "Bulbasaur",
-});
+const pokemonIds = Array.from({ length: 10 }, (_, index) => index + 1);
 
-ReactDOM.render(React.createElement(Pokemon), main_container);
+const pokemons = pokemonIds.map((pokemonId) =>
+  React.createElement(Pokemon, { key: pokemonId, pokemonId }),
+);
+
+ReactDOM.render(
+  React.createElement("div", { className: "pokemon" }, pokemons),
+  main_container,
+);
