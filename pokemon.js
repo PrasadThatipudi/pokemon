@@ -39,13 +39,15 @@ class Pokemon extends React.Component {
   }
 }
 
-const pokemonIds = Array.from({ length: 10 }, (_, index) => index + 1);
+const pokemonIds = Array.from({ length: 10 }, (_, index) => ({
+  pokemonId: index + 1,
+}));
 
-const pokemons = pokemonIds.map((pokemonId) =>
-  React.createElement(Pokemon, { key: pokemonId, pokemonId }),
+const pokemons = pokemonIds.map((pokemon, index) =>
+  React.createElement(Pokemon, { ...pokemon, key: index }),
 );
 
 ReactDOM.render(
-  React.createElement("div", { className: "pokemon" }, pokemons),
+  React.createElement("div", { className: "pokemons" }, pokemons),
   main_container,
 );
